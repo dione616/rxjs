@@ -5,6 +5,7 @@ const subject = new Subject();
 const initialState = {
   timeStart: new Date(),
   timePast: 0,
+  timePause: 0,
 };
 
 let state = initialState;
@@ -13,28 +14,42 @@ const timerStore = {
   init: () => subject.next(state),
   subscribe: (setState) => subject.subscribe(setState),
   startTimer: (isWaiting) => {
-    state = {
-      timeStart: isWaiting ? state.timeStart : new Date(),
-      timePast: isWaiting ? state.timePast : 0,
-    };
+    if (isWaiting) {
+      const differenceNowAndPauseClick = new Date() - state.timePause;
+
+      state = {
+        timeStart: new Date(
+          state.timeStart.getTime() + differenceNowAndPauseClick
+        ),
+        timePast: new Date(),
+        timePause: state.timePause,
+      };
+    } else {
+      state = {
+        timeStart: new Date(),
+        timePast: 0,
+        timePause: 0,
+      };
+    }
     subject.next(state);
   },
   updateTimer: () => {
-    const difference = new Date() - state.timeStart;
     state = {
       ...state,
-      timePast: difference,
+      timePast: new Date(),
     };
+
     subject.next(state);
   },
   pauseTimer: () => {
-    state = { ...state };
-    console.log(state);
+    state = { ...state, timePause: new Date() };
+    subject.next(state);
   },
   clearTimer: () => {
     state = {
       timeStart: new Date(),
       timePast: 0,
+      timePause: 0,
     };
     subject.next(state);
   },
