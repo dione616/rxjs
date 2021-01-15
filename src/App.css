@@ -13,6 +13,42 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.timer-wrapper {
+  background: linear-gradient(55deg, #d793ff, #61dafb);
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 5px 5px 5px 60px;
+}
+.top {
+  top: 0px;
+  background: linear-gradient(55deg, #ffe0e3, #baf2ff);
+  min-height: 250px;
+  border-radius: 5px 5px 5px 60px;
+}
+
+.timer {
+  min-height: 300px;
+  border-radius: 0 60px 0 0;
+}
+
+.timer-buttons {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+.timer-buttons button {
+  padding: 10px;
+  margin: 0 5px 0 5px;
+  background: linear-gradient(55deg, #ffe0e3, #ffc8f82e);
+  border: none;
+  border-radius: 5px;
+  min-width: 150px;
+  font-size: 20px;
+  outline-style: none;
+  cursor: pointer;
+}
+.timer-buttons button:hover {
+  background: linear-gradient(55deg, #ffcfd4, #ff89ef2e);
 }
