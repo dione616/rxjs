@@ -14,7 +14,7 @@
 }
 
 .timer-wrapper {
-  background: linear-gradient(55deg, #d793ff, #61dafb);
+  background: linear-gradient(55deg, #d388ff, #5adbff);
   min-height: 500px;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
 }
 .top {
   top: 0px;
-  background: linear-gradient(55deg, #ffe0e3, #baf2ff);
+  background: linear-gradient(55deg, #ffccd2, #96ecff);
   min-height: 250px;
   border-radius: 5px 5px 5px 60px;
 }
