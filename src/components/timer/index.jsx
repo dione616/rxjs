@@ -27,7 +27,6 @@ const Timer = () => {
   /*<--------- STOP --------->*/
   const timerStop = (e) => {
     e.preventDefault();
-    console.log("STOPPED");
     clearInterval(intervalID);
     timerStore.clearTimer();
     setStarted(false);
@@ -41,6 +40,7 @@ const Timer = () => {
     setStarted(false);
     setIsWaiting(true);
     timerStore.pauseTimer();
+    timerStore.updateTimer();
   };
 
   /*<--------- RESET --------->*/
@@ -70,7 +70,9 @@ const Timer = () => {
     timerStore.init();
   }, []);
 
-  let transformedTime = transformTime(timerState.timePast);
+  let transformedTime = transformTime(
+    timerState.timePast - timerState.timeStart
+  );
 
   return (
     <div className="timer-wrapper">
