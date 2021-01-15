@@ -12,10 +12,10 @@ let state = initialState;
 const timerStore = {
   init: () => subject.next(state),
   subscribe: (setState) => subject.subscribe(setState),
-  startTimer: () => {
+  startTimer: (isWaiting) => {
     state = {
-      timeStart: new Date(),
-      timePast: { ...state },
+      timeStart: isWaiting ? state.timeStart : new Date(),
+      timePast: isWaiting ? state.timePast : 0,
     };
     subject.next(state);
   },
@@ -29,6 +29,7 @@ const timerStore = {
   },
   pauseTimer: () => {
     state = { ...state };
+    console.log(state);
   },
   clearTimer: () => {
     state = {

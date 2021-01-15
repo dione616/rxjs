@@ -3,25 +3,19 @@ import timerStore from "../../store/timer";
 import { transformTime } from "../../utils/transformTime";
 
 const Timer = () => {
-  /* const [timePast, setTimePast] = useState({
-    hours: "0",
-    minutes: "0",
-    seconds: "0",
-  });
-  const [timeStart] = useState(new Date()); */
-
   const [timerState, setTimerState] = useState(timerStore.initialState);
-  const [intervalID, setIntervalID] = useState(null);
+  const [intervalID, setIntervalID] = useState(null); //remember IntervalID to clear it on Stop
   const [started, setStarted] = useState(false);
-
-  console.log(timerState);
+  const [isWaiting, setIsWaiting] = useState(false);
 
   /*<--------- START --------->*/
   const timerStart = (e) => {
     e.preventDefault();
-    console.log("CLICKED");
     setStarted(true);
-    timerStore.startTimer();
+    timerStore.startTimer(isWaiting);
+
+    //if want to continue set isWaiting to false
+    setIsWaiting(false);
 
     setIntervalID(
       setInterval(() => {
@@ -33,7 +27,7 @@ const Timer = () => {
   /*<--------- STOP --------->*/
   const timerStop = (e) => {
     e.preventDefault();
-    /* updateTimer(false); */
+    console.log("STOPPED");
     clearInterval(intervalID);
     timerStore.clearTimer();
     setStarted(false);
@@ -45,26 +39,30 @@ const Timer = () => {
 
     clearInterval(intervalID);
     setStarted(false);
+    setIsWaiting(true);
+    timerStore.pauseTimer();
   };
 
   /*<--------- RESET --------->*/
   const timerReset = (e) => {
     e.preventDefault();
 
-    if (started) {
-      //stop prev
-      clearInterval(intervalID);
-      timerStore.clearTimer();
+    //stop prev
+    clearInterval(intervalID);
+    timerStore.clearTimer();
+    setStarted(false);
 
-      //start new
-      timerStore.startTimer();
+    //start new
+    timerStore.startTimer();
+    setStarted(true);
 
-      setIntervalID(
-        setInterval(() => {
-          timerStore.updateTimer();
-        }, 1000)
-      );
-    }
+    setIntervalID(
+      setInterval(() => {
+        timerStore.updateTimer();
+      }, 1000)
+    );
+
+    setIsWaiting(false);
   };
 
   useLayoutEffect(() => {
